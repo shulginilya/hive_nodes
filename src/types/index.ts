@@ -1,23 +1,38 @@
-export interface PluginType extends PluginTypeEditableType {
-    id: string;
+export enum HttpRequestStatus {
+    idle = 'idle',
+    loading = 'loading',
+    succeeded = 'succeeded',
+    failed = 'failed'
 };
 
-export interface PluginTypeEditableType {
-    title: string;
-    description: string;
-    enabled: boolean;
-    active: boolean;
+enum NodeState {
+    running = 'RUNNING',
+    error = 'ERROR',
 };
 
-export interface TabType {
-    [key: string]: {
-        title: string;
-        icon: string;
-        plugins: string[];
+export type ClustersArrayType = ClusterType[];
+
+export interface NodeType {
+    name: string;
+    state: NodeState.running | NodeState.error;
+    metrics: {
+        msgSec: string;
+        uptime: number;
+        connectedClients: number;
     };
+    clients: ClientType[];
 };
 
-export interface ModifyPluginType {
-    id: string,
-    params: PluginTypeEditableType
+interface ClientType {
+    clientId: string;
+    connectedNode: string;
+    metaData: {
+        clientIp: string;
+    }
+};
+
+interface ClusterType {
+    id: string;
+    name: string;
+    nodes: NodeType[];
 };
