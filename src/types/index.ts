@@ -23,7 +23,7 @@ export interface NodeType {
     clients: ClientType[];
 };
 
-interface ClientType {
+export interface ClientType {
     clientId: string;
     connectedNode: string;
     metaData: {
@@ -35,4 +35,9 @@ interface ClusterType {
     id: string;
     name: string;
     nodes: NodeType[];
+};
+
+export interface FetchClientsReturnType {
+    nodeName: string;
+    clientsData: ClientType[];
 };
