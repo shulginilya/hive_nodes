@@ -2,4 +2,19 @@
 
 .app_container {
     display: block;
+    @media (min-width: $min-screen-sm) {
+        display: flex;
+    }
+    &__sidebar {
+        width: 100%;
+        padding: 10px;
+        @media (min-width: $min-screen-sm) {
+            width: 300px;
+        }
+    }
+    &__content {
+        flex-grow: 1;
+        width: 100%;
+        padding: 10px;
+    }
 }

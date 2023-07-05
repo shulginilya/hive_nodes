@@ -1,5 +1,7 @@
-import AppContainer from '@/containers/AppContainer';
-import NotFoundContainer from '@/containers/NotFoundContainer';
+import {
+	AppContainer,
+	NotFoundContainer,
+} from '@/containers';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const App = () => (
