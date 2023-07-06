@@ -1,16 +1,11 @@
-import { PluginTypeEditableType } from '@/types';
 import { commonConfig } from '@/configs/common';
 
 type MethodType = 'GET' | 'PUT' | 'POST' | 'DELETE';
 
 interface MakeRequestType {
     url: string;
-    params?: PluginTypeEditableType | PluginEnabilityType;
+    params?: any;
     method?: MethodType;
-};
-
-interface PluginEnabilityType {
-    enable: boolean;
 };
 
 interface OptionsType {
