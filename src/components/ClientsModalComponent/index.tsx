@@ -37,6 +37,20 @@ const ClientsModalComponent: React.FC<ClientsModalComponentType> = ({
                                         className={styles.clients__client}
                                     >
                                         {client.clientId}
+                                        <div className={styles.clients__client__popover}>
+                                            {
+                                                Object.keys(client.metaData).map((metaKey) => (
+                                                    // @ts-ignore
+                                                    <p key={metaKey} className={styles.clients__client__popover__msg}>{`${metaKey}: ${client.metaData[metaKey]}`}</p>
+                                                ))
+                                            }
+                                            {
+                                                Object.keys(node.metrics).map((metricKey) => (
+                                                    // @ts-ignore
+                                                    <p key={metricKey} className={styles.clients__client__popover__msg}>{`${metricKey}: ${node.metrics[metricKey]}`}</p>
+                                                ))
+                                            }
+                                        </div>
                                     </div>
                                 )
                             })
