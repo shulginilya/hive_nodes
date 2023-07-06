@@ -1,20 +1,23 @@
 @use '@/styles/variables' as *;
 
 .app_container {
-    display: block;
+    position: relative;
+    height: 100vh;
     @media (min-width: $min-screen-sm) {
         display: flex;
     }
     &__sidebar {
         width: 100%;
         padding: 10px;
+        background-color: $grey;
         @media (min-width: $min-screen-sm) {
-            width: 300px;
+            width: 250px;
+            flex: 0 0 auto;
         }
     }
     &__content {
-        flex-grow: 1;
         width: 100%;
         padding: 10px;
+        flex: 1 1 auto;
     }
 }

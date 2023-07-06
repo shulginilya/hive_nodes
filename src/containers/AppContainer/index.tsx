@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import {
 	ClustersMenuComponent,
 	ClusterDataComponent,
+	PreloaderComponent,
 } from '@/components';
 import {
 	useAppSelector,
@@ -12,6 +13,7 @@ import {
 	selectData,
 	fetchNodes
 } from '@/reduxStore/reducers/clustersReducer';
+import { HttpRequestStatus } from '@/types';
 import styles from './app_container.module.scss';
 
 const AppContainer: React.FC = () => {
@@ -39,12 +41,25 @@ const AppContainer: React.FC = () => {
 	}, [status, dispatch]);
 	return (
 		<main className={styles.app_container}>
-			<div className={styles.app_container__sidebar}>
-				<ClustersMenuComponent />
-			</div>
-			<div className={styles.app_container__content}>
-				<ClusterDataComponent />
-			</div>
+			{
+				status === HttpRequestStatus.loading ? (
+					<PreloaderComponent />
+				) : (
+					<>
+						<div className={styles.app_container__sidebar}>
+							<ClustersMenuComponent
+								clustersData={clustersData}
+								current_cluster_id={current_cluster_id}
+							/>
+						</div>
+						<div className={styles.app_container__content}>
+							<ClusterDataComponent
+								clustersData={clustersData}
+							/>
+						</div>
+					</>
+				)
+			}
 		</main>
 	)
 };
