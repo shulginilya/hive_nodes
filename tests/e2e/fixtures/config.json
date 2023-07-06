@@ -1,3 +1,4 @@
 {
-    "placeholder": "placeholder"
+    "sample_cluster_id": "cluster_1",
+    "empty_cluster_id": "cluster_2"
 }

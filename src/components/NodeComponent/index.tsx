@@ -38,6 +38,7 @@ const NodeComponent: React.FC<NodeComponentType> = ({
     }
     return (
         <div
+            data-test={`node_${i}`}
             className={styles.node}
             onClick={loadClients}
             // @ts-ignore */
@@ -47,7 +48,10 @@ const NodeComponent: React.FC<NodeComponentType> = ({
             <button
                 className={styles.node__cta}
             >clients</button>
-            <div className={styles.node__popover}>
+            <div
+                data-test={`node_popover_${i}`}
+                className={styles.node__popover}
+            >
                 {
                     Object.keys(node.metrics).map((metricKey) => (
                         // @ts-ignore

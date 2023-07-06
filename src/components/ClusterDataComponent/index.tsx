@@ -15,6 +15,7 @@ const ClusterDataComponent: React.FC<ClusterDataComponentType> = ({
 	if (cluster.nodes.length > 0) {
 		return (
 			<div
+				data-test="cluster"
 				className={styles.cluster}
 				// @ts-ignore */
 				style={clusterInline}
@@ -25,7 +26,9 @@ const ClusterDataComponent: React.FC<ClusterDataComponentType> = ({
 			</div>
 		)
 	}
-	return null;
+	return (
+		<div data-test="empty_cluster_msg">cluster is empty</div>
+	);
 };
 
 export default ClusterDataComponent;
