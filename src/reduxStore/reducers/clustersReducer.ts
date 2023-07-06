@@ -18,10 +18,12 @@ import {
 */
 const clusters: ClusterObjectsType = {
     'cluster_1': {
+        id: 'cluster_1',
         name: 'Cluster 1',
         nodes: []
     },
     'cluster_2': {
+        id: 'cluster_2',
         name: 'Cluster Empty',
         nodes: []
     }
@@ -64,7 +66,7 @@ export const fetchClients = createAsyncThunk('clients/fetchClients', async (data
     return {
         clusterId,
         nodeName,
-        clientsData
+        clientsData: clientsData.clients
     };
 });
 
@@ -107,7 +109,7 @@ export const clustersReducer = createSlice({
                 if (state.clustersData[clusterId]) {
                     const nodeKey = state.clustersData[clusterId].nodes.findIndex(node => node.name === nodeName);
                     if (nodeKey > -1) {
-                        state.clustersData[clusterId].nodes[nodeKey].clients = clientsData;
+                        state.clustersData[clusterId].nodes[nodeKey]['clients'] = clientsData;
                     }
                 }
             })

@@ -34,6 +34,7 @@ export interface ClientType {
 };
 
 export interface ClusterType {
+    id: string;
     name: string;
     nodes: NodeType[];
 };
