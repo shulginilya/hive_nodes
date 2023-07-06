@@ -29,8 +29,7 @@ const AppContainer: React.FC = () => {
 		Retrieve current cluster id from the router
 	*/
 	const { cluster_id } = useParams();
-	const clusterKey = clustersData.findIndex(cluster => cluster.id === cluster_id);
-	const current_cluster_id = (cluster_id && clusterKey > -1) ? cluster_id : clustersData[0].id;
+	const current_cluster_id = (cluster_id && clustersData[cluster_id]) ? cluster_id : Object.keys(clustersData)[0];
 	/*
 		Initial load of plugins data
 	*/
@@ -54,7 +53,7 @@ const AppContainer: React.FC = () => {
 						</div>
 						<div className={styles.app_container__content}>
 							<ClusterDataComponent
-								clustersData={clustersData}
+								cluster={clustersData[current_cluster_id]}
 							/>
 						</div>
 					</>

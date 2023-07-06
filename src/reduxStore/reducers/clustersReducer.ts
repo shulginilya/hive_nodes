@@ -6,24 +6,28 @@ import {
 import { makeRequest } from '@/utils/requestUtil';
 import { RootState } from "@/reduxStore/store";
 import {
-    ClustersArrayType,
+    ClusterObjectsType,
     HttpRequestStatus,
     FetchClientsReturnType,
     FetchNodesReturnType,
+    FetchClientsParamsType,
 } from "@/types";
 
 /*
     State structure definition
 */
-const clusters: ClustersArrayType = [
-    {
-        id: 'cluster_1',
+const clusters: ClusterObjectsType = {
+    'cluster_1': {
         name: 'Cluster 1',
         nodes: []
+    },
+    'cluster_2': {
+        name: 'Cluster Empty',
+        nodes: []
     }
-];
+};
 interface initialStateType {
-    clustersData: ClustersArrayType,
+    clustersData: ClusterObjectsType,
     status: HttpRequestStatus.idle | HttpRequestStatus.loading | HttpRequestStatus.succeeded | HttpRequestStatus.failed,
     error: string | null;
 };
@@ -49,11 +53,16 @@ export const fetchNodes = createAsyncThunk('nodes/fetchNodes', async (clusterId:
 /*
     Load clients from the server
 */
-export const fetchClients = createAsyncThunk('clients/fetchClients', async (nodeName: string) => {
+export const fetchClients = createAsyncThunk('clients/fetchClients', async (data: FetchClientsParamsType) => {
+    const {
+        clusterId,
+        nodeName,
+    } = data;
     const clientsData = await makeRequest({
         url: `/nodes/${nodeName}/clients`
     });
     return {
+        clusterId,
         nodeName,
         clientsData
     };
@@ -77,9 +86,8 @@ export const clustersReducer = createSlice({
                     nodesData,
                     clusterId
                 } = action.payload;
-                const clusterKey = state.clustersData.findIndex(cluster => cluster.id === clusterId);
-                if (clusterKey > -1) {
-                    state.clustersData[clusterKey].nodes = nodesData;
+                if (state.clustersData[clusterId]) {
+                    state.clustersData[clusterId].nodes = nodesData;
                 }
             })
             .addCase(fetchNodes.rejected, (state) => {
@@ -93,11 +101,14 @@ export const clustersReducer = createSlice({
                 state.status = HttpRequestStatus.succeeded;
                 const {
                     clientsData,
-                    nodeName
+                    nodeName,
+                    clusterId,
                 } = action.payload;
-                const nodeKey = state.clustersData[0].nodes.findIndex(node => node.name === nodeName);
-                if (nodeKey > -1) {
-                    state.clustersData[0].nodes[nodeKey].clients = clientsData;
+                if (state.clustersData[clusterId]) {
+                    const nodeKey = state.clustersData[clusterId].nodes.findIndex(node => node.name === nodeName);
+                    if (nodeKey > -1) {
+                        state.clustersData[clusterId].nodes[nodeKey].clients = clientsData;
+                    }
                 }
             })
             .addCase(fetchClients.rejected, (state) => {

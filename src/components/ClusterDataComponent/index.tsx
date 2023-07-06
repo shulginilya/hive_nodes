@@ -1,14 +1,14 @@
-import { ClustersArrayType } from "@/types";
+import { ClusterType } from "@/types";
 import styles from './cluster.module.scss';
 
 interface ClusterDataComponentType {
-	clustersData: ClustersArrayType
+	cluster: ClusterType
 };
 
 const ClusterDataComponent: React.FC<ClusterDataComponentType> = ({
-	clustersData
+	cluster
 }) => {
-	console.log('clustersData data: ', clustersData);
+	console.log('cluster: ', cluster);
 	return (
 		<div className={styles.cluster}>
 			cluster data placeholder

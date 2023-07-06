@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ClustersArrayType } from "@/types";
+import { ClusterObjectsType } from "@/types";
 import styles from './cluster_menu.module.scss';
 
 interface ClustersMenuComponentType {
-	clustersData: ClustersArrayType;
+	clustersData: ClusterObjectsType;
 	current_cluster_id: string;
 };
 
@@ -13,17 +13,17 @@ const ClustersMenuComponent: React.FC<ClustersMenuComponentType> = ({
 }) => (
 	<ul className={styles.cluster_menu}>
 		{
-			clustersData.map(cluster => {
-				const linkClassName = (current_cluster_id === cluster.id) ? `${styles.cluster_menu__item__link} ${styles.cluster_menu__item__link_active}` : styles.cluster_menu__item__link;
+			Object.keys(clustersData).map(clusterId => {
+				const linkClassName = (current_cluster_id === clusterId) ? `${styles.cluster_menu__item__link} ${styles.cluster_menu__item__link_active}` : styles.cluster_menu__item__link;
 				return (
 					<li
-						key={cluster.id}
+						key={clusterId}
 						className={styles.cluster_menu__item}
 					>
 						<Link
                             className={linkClassName}
-                            to={`/${cluster.id}`}
-                        >{cluster.name}</Link>
+                            to={`/${clusterId}`}
+                        >{clustersData[clusterId].name}</Link>
 					</li>
 				)
 			})

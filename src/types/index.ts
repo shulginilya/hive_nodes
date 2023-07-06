@@ -10,7 +10,9 @@ enum NodeState {
     error = 'ERROR',
 };
 
-export type ClustersArrayType = ClusterType[];
+export type ClusterObjectsType = {
+    [key: string]: ClusterType
+};
 
 export interface NodeType {
     name: string;
@@ -31,13 +33,13 @@ export interface ClientType {
     }
 };
 
-interface ClusterType {
-    id: string;
+export interface ClusterType {
     name: string;
     nodes: NodeType[];
 };
 
 export interface FetchClientsReturnType {
+    clusterId: string;
     nodeName: string;
     clientsData: ClientType[];
 };
@@ -45,4 +47,9 @@ export interface FetchClientsReturnType {
 export interface FetchNodesReturnType {
     clusterId: string;
     nodesData: NodeType[];
+};
+
+export interface FetchClientsParamsType {
+    clusterId: string;
+    nodeName: string;
 };
