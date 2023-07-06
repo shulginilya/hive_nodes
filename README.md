@@ -3,6 +3,8 @@
 1) install required packages using yarn or npm : 'yarn install' or 'npm install'
 2) run the project using 'npm start'
 3) to run e2e tests in a headless mode you can use this command: 'npm run test:e2e' or alternatively 'npm run cy:open'
+4) alternatively you should be able to see it live as i deployed it to heroku:
+https://hivenodes-ba3b94dc6549.herokuapp.com/
 
 
 What I would improve if I would have more time:
