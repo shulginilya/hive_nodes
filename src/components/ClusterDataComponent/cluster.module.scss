@@ -1,3 +1,13 @@
+@use '@/styles/variables' as *;
+
 .cluster {
-    display: block;
+    display: grid;
+    grid-template-areas: "layer";
+    place-items: center;
+    background: $white;
+    border: solid 2px $blue;
+    border-radius: 50%;
+    --radius: 25vmin;
+    width: calc(2 * var(--radius));
+    height: calc(2 * var(--radius));
 }

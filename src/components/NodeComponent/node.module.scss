@@ -1,0 +1,26 @@
+@use '@/styles/variables' as *;
+
+.node {
+    grid-area: layer;
+    cursor: pointer;
+    width: 10vmin;
+    height: 10vmin;
+    border-radius: 50%;
+    
+    display: grid;
+    place-items: center;
+    
+    background: $grey;
+    font-size: 12px;
+    color: $white;
+    font-weight: 600;
+    
+    --d: calc(var(--i) / var(--total));
+    --r-offset: -0.25turn;
+    --r-amount: 1turn;
+    --r: calc((var(--r-amount) * var(--d)) + var(--r-offset));
+    --transform: rotate(var(--r)) translate(var(--radius))
+        rotate(calc(-1 * var(--r)));
+    
+    transform: var(--transform);
+}

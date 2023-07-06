@@ -5,7 +5,7 @@ export enum HttpRequestStatus {
     failed = 'failed'
 };
 
-enum NodeState {
+export enum NodeState {
     running = 'RUNNING',
     error = 'ERROR',
 };

@@ -8,12 +8,21 @@ interface ClusterDataComponentType {
 
 const ClusterDataComponent: React.FC<ClusterDataComponentType> = ({
 	cluster
-}) => (
-	<div className={styles.cluster}>
-		{
-			cluster.nodes.map(node => <NodeComponent key={node.name} node={node} clusterId={cluster.id} />)
-		}
-	</div>
-);
+}) => {
+	const clusterInline = {
+		'--total': cluster.nodes.length
+	};
+	return (
+		<div
+			className={styles.cluster}
+			// @ts-ignore */
+			style={clusterInline}
+		>
+			{
+				cluster.nodes.map((node, i) => <NodeComponent key={node.name} node={node} clusterId={cluster.id} i={i} />)
+			}
+		</div>
+	)
+};
 
 export default ClusterDataComponent;
