@@ -7,10 +7,9 @@ import { makeRequest } from '@/utils/requestUtil';
 import { RootState } from "@/reduxStore/store";
 import {
     ClustersArrayType,
-    NodeType,
-    ClientType,
     HttpRequestStatus,
     FetchClientsReturnType,
+    FetchNodesReturnType,
 } from "@/types";
 
 /*
@@ -37,11 +36,14 @@ const initialState: initialStateType = {
 /*
     Load nodes from the server
 */
-export const fetchNodes = createAsyncThunk('nodes/fetchNodes', async () => {
+export const fetchNodes = createAsyncThunk('nodes/fetchNodes', async (clusterId: string) => {
     const nodesData = await makeRequest({
         url: '/nodes'
     });
-    return nodesData;
+    return {
+        clusterId,
+        nodesData
+    }
 });
 
 /*
@@ -69,10 +71,16 @@ export const clustersReducer = createSlice({
             .addCase(fetchNodes.pending, (state) => {
                 state.status = HttpRequestStatus.loading;
             })
-            .addCase(fetchNodes.fulfilled, (state, action: PayloadAction<NodeType[]>) => {
+            .addCase(fetchNodes.fulfilled, (state, action: PayloadAction<FetchNodesReturnType>) => {
                 state.status = HttpRequestStatus.succeeded;
-                const nodes = action.payload;
-                state.clustersData[0].nodes = nodes;
+                const {
+                    nodesData,
+                    clusterId
+                } = action.payload;
+                const clusterKey = state.clustersData.findIndex(cluster => cluster.id === clusterId);
+                if (clusterKey > -1) {
+                    state.clustersData[clusterKey].nodes = nodesData;
+                }
             })
             .addCase(fetchNodes.rejected, (state) => {
                 state.status = HttpRequestStatus.failed;

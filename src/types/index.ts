@@ -41,3 +41,8 @@ export interface FetchClientsReturnType {
     nodeName: string;
     clientsData: ClientType[];
 };
+
+export interface FetchNodesReturnType {
+    clusterId: string;
+    nodesData: NodeType[];
+};
