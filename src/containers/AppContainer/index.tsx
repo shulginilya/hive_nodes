@@ -40,12 +40,12 @@ const AppContainer: React.FC = () => {
 			dispatch(fetchNodes(current_cluster_id));
 		}
 	}, [status, dispatch]);
-	const getNodeClients = (nodeName: string) => {
+	const getNode = (nodeName: string) => {
 		const nodeKey = clustersData[current_cluster_id].nodes.findIndex(n => n.name === nodeName);
 		if (nodeKey > -1) {
-			return clustersData[current_cluster_id].nodes[nodeKey].clients;
+			return clustersData[current_cluster_id].nodes[nodeKey];
 		}
-		return [];
+		return null;
 	}
 	return (
 		<main className={styles.app_container}>
@@ -64,7 +64,7 @@ const AppContainer: React.FC = () => {
 				{
 					activatedNodeModalClients && (
 						<ClientsModalComponent
-							clients={getNodeClients(activatedNodeModalClients)}
+							node={getNode(activatedNodeModalClients)}
 						/>
 					)
 				}

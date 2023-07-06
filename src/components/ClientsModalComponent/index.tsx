@@ -1,4 +1,4 @@
-import { ClientType } from '@/types';
+import { NodeType } from '@/types';
 import {
 	useAppDispatch,
 } from "@/reduxStore/hooks";
@@ -8,39 +8,45 @@ import {
 import styles from './clients_modal.module.scss';
 
 interface ClientsModalComponentType {
-    clients: ClientType[]
+    node: NodeType | null
 };
 
 const ClientsModalComponent: React.FC<ClientsModalComponentType> = ({
-    clients
+    node
 }) => {
     const dispatch = useAppDispatch();
     const closeModal = () => {
         dispatch(resetClientsModal());
     };
-    return (
-        <div className={styles.clients_modal}>
-            <div className={styles.clients_modal__bg} />
-            <div className={styles.clients_modal__inner}>
-                <label
-                    className={styles.clients_modal__close}
-                    onClick={closeModal}
-                ></label>
-                {
-                    clients.map(client => {
-                        return (
-                            <div
-                                key={client.clientId}
-                                className={styles.clients_modal__client}
-                            >
-                                {client.clientId}
-                            </div>
-                        )
-                    })
-                }
+    if (node) {
+        return (
+            <div className={styles.clients_modal}>
+                <div className={styles.clients_modal__bg} />
+                <div className={styles.clients_modal__inner}>
+                    <label
+                        className={styles.clients_modal__close}
+                        onClick={closeModal}
+                    ></label>
+                    <p className={styles.clients_modal__title}>Clients of node: {node.name}</p>
+                    <div className={styles.clients}>
+                        {
+                            node.clients.map(client => {
+                                return (
+                                    <div
+                                        key={client.clientId}
+                                        className={styles.clients__client}
+                                    >
+                                        {client.clientId}
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+    return null;
 };
 
 export default ClientsModalComponent;
