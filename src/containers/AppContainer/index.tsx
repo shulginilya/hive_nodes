@@ -4,6 +4,7 @@ import {
 	ClustersMenuComponent,
 	ClusterDataComponent,
 	PreloaderComponent,
+	ClientsModalComponent,
 } from '@/components';
 import {
 	useAppSelector,
@@ -24,6 +25,7 @@ const AppContainer: React.FC = () => {
 	const {
 		clustersData,
 		status,
+		activatedNodeModalClients,
 	} = useAppSelector(selectData);
 	/*
 		Retrieve current cluster id from the router
@@ -38,27 +40,38 @@ const AppContainer: React.FC = () => {
 			dispatch(fetchNodes(current_cluster_id));
 		}
 	}, [status, dispatch]);
+	const getNodeClients = (nodeName: string) => {
+		const nodeKey = clustersData[current_cluster_id].nodes.findIndex(n => n.name === nodeName);
+		if (nodeKey > -1) {
+			return clustersData[current_cluster_id].nodes[nodeKey].clients;
+		}
+		return [];
+	}
 	return (
 		<main className={styles.app_container}>
 			{
-				status === HttpRequestStatus.loading ? (
+				status === HttpRequestStatus.loading && (
 					<PreloaderComponent />
-				) : (
-					<>
-						<div className={styles.app_container__sidebar}>
-							<ClustersMenuComponent
-								clustersData={clustersData}
-								current_cluster_id={current_cluster_id}
-							/>
-						</div>
-						<div className={styles.app_container__content}>
-							<ClusterDataComponent
-								cluster={clustersData[current_cluster_id]}
-							/>
-						</div>
-					</>
 				)
 			}
+			<div className={styles.app_container__sidebar}>
+				<ClustersMenuComponent
+					clustersData={clustersData}
+					current_cluster_id={current_cluster_id}
+				/>
+			</div>
+			<div className={styles.app_container__content}>
+				{
+					activatedNodeModalClients && (
+						<ClientsModalComponent
+							clients={getNodeClients(activatedNodeModalClients)}
+						/>
+					)
+				}
+				<ClusterDataComponent
+					cluster={clustersData[current_cluster_id]}
+				/>
+			</div>
 		</main>
 	)
 };

@@ -12,17 +12,20 @@ const ClusterDataComponent: React.FC<ClusterDataComponentType> = ({
 	const clusterInline = {
 		'--total': cluster.nodes.length
 	};
-	return (
-		<div
-			className={styles.cluster}
-			// @ts-ignore */
-			style={clusterInline}
-		>
-			{
-				cluster.nodes.map((node, i) => <NodeComponent key={node.name} node={node} clusterId={cluster.id} i={i} />)
-			}
-		</div>
-	)
+	if (cluster.nodes.length > 0) {
+		return (
+			<div
+				className={styles.cluster}
+				// @ts-ignore */
+				style={clusterInline}
+			>
+				{
+					cluster.nodes.map((node, i) => <NodeComponent key={node.name} node={node} clusterId={cluster.id} i={i} />)
+				}
+			</div>
+		)
+	}
+	return null;
 };
 
 export default ClusterDataComponent;

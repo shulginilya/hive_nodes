@@ -23,4 +23,53 @@
         rotate(calc(-1 * var(--r)));
     
     transform: var(--transform);
+    &__popover {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        left: -150px;
+        transform: translate(0, 10px);
+        background-color: $blue;
+        padding: 10px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        z-index: 10;
+        &__msg {
+            font-weight: 600;
+            margin-bottom: 5px;
+            &:last-child {
+                margin-bottom: 0px;
+            }
+        }
+    }
+
+    &__cta {
+        border: none;
+        border-radius: 3px;
+        background-color: $blue;
+        font-weight: 600;
+        padding: 4px;
+        color: $white;
+        cursor: pointer;
+    }
+
+    &:hover {
+        .node__popover {
+            z-index: 10;
+            opacity: 1;
+            visibility: visible;
+            transform: translate(0, -20px);
+            transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+        }
+    }
+    &__modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

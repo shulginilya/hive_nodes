@@ -32,11 +32,13 @@ interface initialStateType {
     clustersData: ClusterObjectsType,
     status: HttpRequestStatus.idle | HttpRequestStatus.loading | HttpRequestStatus.succeeded | HttpRequestStatus.failed,
     error: string | null;
+    activatedNodeModalClients: string | null;
 };
 const initialState: initialStateType = {
     clustersData: clusters,
     status: HttpRequestStatus.idle,
     error: null,
+    activatedNodeModalClients: null,
 };
 
 /*
@@ -76,7 +78,11 @@ export const fetchClients = createAsyncThunk('clients/fetchClients', async (data
 export const clustersReducer = createSlice({
     name: "clusters",
     initialState,
-    reducers: {},
+    reducers: {
+        resetClientsModal: (state) => {
+            state.activatedNodeModalClients = null;
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchNodes.pending, (state) => {
@@ -110,6 +116,7 @@ export const clustersReducer = createSlice({
                     const nodeKey = state.clustersData[clusterId].nodes.findIndex(node => node.name === nodeName);
                     if (nodeKey > -1) {
                         state.clustersData[clusterId].nodes[nodeKey]['clients'] = clientsData;
+                        state.activatedNodeModalClients = nodeName;
                     }
                 }
             })
@@ -119,6 +126,9 @@ export const clustersReducer = createSlice({
             })
     }
 });
+
+
+export const { resetClientsModal } = clustersReducer.actions;
 
 export const selectData = (state: RootState) => state.clusters;
 

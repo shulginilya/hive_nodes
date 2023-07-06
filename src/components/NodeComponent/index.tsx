@@ -3,12 +3,10 @@ import {
     NodeState,
 } from "@/types";
 import {
-	useAppSelector,
 	useAppDispatch,
 } from "@/reduxStore/hooks";
 import {
-    fetchClients,
-    selectData,
+    fetchClients
 } from '@/reduxStore/reducers/clustersReducer';
 import styles from './node.module.scss';
 
@@ -24,7 +22,6 @@ const NodeComponent: React.FC<NodeComponentType> = ({
     i,
 }) => {
     const dispatch = useAppDispatch();
-    const { status } = useAppSelector(selectData);
     const loadClients = () => {
         dispatch(fetchClients({
             clusterId,
@@ -47,13 +44,17 @@ const NodeComponent: React.FC<NodeComponentType> = ({
             style={inlineStyleNode}
         >
             {node.name}
-            {
-                node.clients?.map(client => {
-                    return (
-                        <div>{client.clientId}</div>
-                    )
-                })
-            }
+            <button
+                className={styles.node__cta}
+            >clients</button>
+            <div className={styles.node__popover}>
+                {
+                    Object.keys(node.metrics).map((metricKey) => (
+                        // @ts-ignore
+                        <p key={metricKey} className={styles.node__popover__msg}>{`${metricKey}: ${node.metrics[metricKey]}`}</p>
+                    ))
+                }
+            </div>
         </div>
     )
 };
